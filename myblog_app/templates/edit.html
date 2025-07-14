@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+{% block title %}Edit Blog{%endblock %}
+{% block content %}
+
+<div class="post-form-container">
+  <h2>Edit Blog Post</h2>
+
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <label for="id_title" class="form-label">Title</label>
+    {{ form.title }}
+    
+    <label for="id_content" class="form-label">Your Story</label>
+    {{ form.content }}
+
+    <label for="id_image" class="form-label">Upload Image</label>
+    {{ form.image }}
+    
+    <div id="imagePreview"></div>
+
+    <button type="submit" class="btn-submit">Update</button>
+  </form>
+</div>
+
+<script>
+  const imageInput = document.getElementById("id_image");
+  const previewDiv = document.getElementById("imagePreview");
+
+  if (imageInput) {
+    imageInput.addEventListener("change", function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          previewDiv.innerHTML = `<img src="${e.target.result}" class="preview-img"/>`;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  }
+</script>
+
+{% endblock %}

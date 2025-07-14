@@ -1,0 +1,89 @@
+{% extends 'layout.html' %} {% block title %}Dashboard Page{%endblock %} 
+{%block content %}
+<style>
+  .dashboard-heading {
+    font-size: 2rem;
+    color: #d63384;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  .blog-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .blog-card h5 {
+    color: #333;
+    font-weight: bold;
+  }
+  .blog-card p {
+    color: #555;
+  }
+  .btn-action {
+    margin-right: 10px;
+    border-radius: 20px;
+  }
+</style>
+
+<div class="container mt-5">
+  <div class="dashboard-heading">
+    Hello, {{ request.user.username }} 👋 — Welcome to Your Dashboard
+  </div>
+
+  <div class="text-end mb-4">
+    <a href="{% url 'write' %}" class="btn btn-success px-4 py-2"
+      >➕ Add New Blog</a
+    >
+  </div>
+
+  {% if blogs %}
+  <div class="row">
+    {% for blog in blogs %}
+    <div class="col-md-6">
+      <div class="blog-card">
+        <h5>{{ blog.title }}</h5>
+        <p class="text-muted mb-1">
+          Created on: {{ blog.created_at|date:"d M Y" }}
+        </p>
+        <p>{{ blog.content|truncatewords:20 }}</p>
+        {% if blog.image %}
+        <img
+          src="{{ blog.image.url }}"
+          alt="Blog image"
+          class="img-fluid rounded mb-2"
+          style="max-height: 150px"
+        />
+        {% endif %}
+
+        <div class="d-flex justify-content-end">
+          <a
+            href="{% url 'blog_detail' blog.id %}"
+            class="btn btn-primary btn-sm btn-action"
+            >Read</a
+          >
+          <a
+            href="{% url 'edit_blog' blog.id %}"
+            class="btn btn-primary btn-sm btn-action"
+            >Edit</a
+          >
+          <a
+            href="{% url 'delete_blog' blog.id %}"
+            class="btn btn-danger btn-sm btn-action"
+            onclick="return confirm('Are you sure?')"
+            >Delete</a
+          >
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="alert alert-info text-center">
+    No blogs posted yet. Start sharing your thoughts! 💬
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

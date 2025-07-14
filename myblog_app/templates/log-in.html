@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block title %}Login{%endblock %}
+{% block content %}
+
+
+<!-- Centering Wrapper -->
+<div style="min-height: 100vh; display: flex; justify-content: center; align-items: center; background-color: #fff6fa;">
+
+  <!-- Login Form Card -->
+  <div style="max-width: 450px; width: 100%; background: linear-gradient(135deg, #ffe6f0, #fff0f6); border-radius: 20px; box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1); padding: 30px;">
+    <h2 class="text-center mb-4" style="color: #cc3366; font-weight: 700; font-family: 'Segoe UI', sans-serif;">
+      Welcome Back 
+    </h2>
+
+    <form method="POST" action="{% url 'log-in' %}">
+      {% csrf_token %}
+
+      <div class="mb-3">
+        <label for="username" style="font-weight: 500;">Username:</label>
+        {{ form.username }}
+      </div>
+
+      <div class="mb-3">
+        <label for="password" style="font-weight: 500;">Password:</label>
+        {{ form.password }}
+      </div>
+
+      <button type="submit" class="btn w-100" style="background-color: #cc3366; color: white; font-weight: 500; border-radius: 8px; padding: 10px;">
+        Login
+      </button>
+    </form>
+
+    {% if messages %}
+      <div class="mt-3">
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="text-center mt-4">
+      <a href="{% url 'forgot-password' %}" style="color: #cc3366; text-decoration: underline; font-weight: 500;">Forgot Password?</a>
+      <br>
+      <span style="font-size: 14px;">Don’t have an account?</span>
+      <a href="{% url 'sign-up' %}" style="color: #cc3366; font-weight: 600;">Register</a>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

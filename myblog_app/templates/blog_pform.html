@@ -1,0 +1,118 @@
+{% extends 'layout.html' %}
+{% block title %}Write Blog{% endblock %}
+ {% block extra_head %}
+    {{ form.media }} 
+    
+    {% endblock %}
+{% block content %}
+
+<style>
+  body {
+    background-color: #fdfdfd;
+    font-family: 'Georgia', serif;
+  }
+
+  .post-form-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 40px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  }
+
+  .post-form-container h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #d63384;
+  }
+
+  .form-control,
+  textarea {
+    width: 100%;
+    border: 1px solid #ccc;
+    padding: 12px 15px;
+    margin-bottom: 25px;
+    font-size: 1.1rem;
+    background: #fff;
+    border-radius: 8px;
+    resize: none;
+    transition: border-color 0.3s;
+  }
+
+  .form-control:focus,
+  textarea:focus {
+    border-color: #d63384;
+    outline: none;
+  }
+
+  .form-label {
+    font-weight: 600;
+    margin-bottom: 10px;
+    display: block;
+    color: #444;
+  }
+
+  .preview-img {
+    max-height: 200px;
+    margin-top: 10px;
+    border-radius: 8px;
+  }
+
+  .btn-submit {
+    display: inline-block;
+    background: #d63384;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    border-radius: 30px;
+    transition: background 0.3s;
+  }
+
+  .btn-submit:hover {
+    background: #bd266f;
+  }
+</style>
+
+<div class="post-form-container">
+  <h2>📝 Write Your Blog</h2>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    <label class="form-label" for="id_title">Title</label>
+    {{ form.title }}
+
+    <label class="form-label" for="id_content">Content</label>
+    {{ form.content }}
+
+    <label class="form-label" for="id_image">Upload Image</label>
+    {{ form.image }}
+    <div id="imagePreview"></div>
+
+    <button type="submit" class="btn-submit">Publish</button>
+  </form>
+</div>
+
+<script>
+  const imageInput = document.getElementById("id_image");
+  const previewDiv = document.getElementById("imagePreview");
+
+  if (imageInput) {
+    imageInput.addEventListener("change", function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          previewDiv.innerHTML = `<img src="${e.target.result}" class="preview-img"/>`;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  }
+</script>
+
+{% endblock %}
