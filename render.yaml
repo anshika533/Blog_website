@@ -10,3 +10,11 @@ services:
     envVars:
       - key: DJANGO_SETTINGS_MODULE
         value: blog_website.settings
+      - key: PYTHON_VERSION
+        value: 3.10
+      - key: SECRET_KEY
+        value: your-secret-key
+      - key: ALLOWED_HOSTS
+        value: blog-website-hl02.onrender.com
+      - key: STATIC_ROOT
+        value: staticfiles
