@@ -13,10 +13,6 @@ venv/
 # Log files
 *.log
 
-# # Static/media files
-# staticfiles/
-# media/
-
 # VS Code settings (optional)
 .vscode/
 
