@@ -6,16 +6,16 @@ __pycache__/
 env/
 venv/
 
-# Django database
-*.sqlite3
-db.sqlite3
+# # Django database
+# *.sqlite3
+# db.sqlite3
 
 # Log files
 *.log
 
-# Static/media files
-staticfiles/
-media/
+# # Static/media files
+# staticfiles/
+# media/
 
 # VS Code settings (optional)
 .vscode/
